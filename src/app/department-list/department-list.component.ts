@@ -1,19 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { DepartmentService } from '../department.service';
 
 @Component({
   selector: 'app-department-list',
-  template: `
-    <p>
-      department-list works!
-    </p>
-  `,
+  templateUrl: 'department-list.component.html',
   styles: []
 })
 export class DepartmentListComponent implements OnInit {
-
-  constructor() { }
+  departments = [];
+  errorMsg = '';
+  constructor(private _departmentService: DepartmentService) { }
 
   ngOnInit() {
+    this._departmentService.getDepartments()
+      .subscribe(
+        data => this.departments = data,
+        error => this.errorMsg = error
+      );
   }
 
 }
